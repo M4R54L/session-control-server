@@ -6,7 +6,7 @@ require('dotenv').config();
 class Server {
   constructor() {
     this.app = express();
-    this.port = process.env.PORT;
+    this.port = process.env.PORT || 8080;
     this.routesConfig = {
       User: {
         path: '/api/user',
