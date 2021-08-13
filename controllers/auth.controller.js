@@ -6,7 +6,7 @@ const generateJwt = require('../helpers/jwt.helper');
 const validateLogin = async (req = request, res = response) => {
   const { username, password } = req.body;
   const query = { username };
-
+  //console.log(req.body);
   const user = await User.findOne(query);
 
   if (!user)
@@ -21,10 +21,10 @@ const validateLogin = async (req = request, res = response) => {
       errors: 'La contraseña es incorrecta',
     });
 
-  const token = await generateJwt(user.id);
+  const token = username === 'admin' ? await generateJwt(user.id) : '';
 
   res.json({
-    payload: token,
+    payload: { token, isAdmin: username === 'admin' ? true : false, username },
   });
 };
 
